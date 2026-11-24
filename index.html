@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Checklist de Equipamentos</title>
+<meta name="theme-color" content="#1f3a5f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar no-print">
+  <h1>Checklist de Equipamentos</h1>
+  <button id="themeBtn" class="icon-btn" aria-label="Alternar tema claro/escuro">🌓</button>
+</header>
+
+<nav class="tabs no-print" role="tablist">
+  <button class="tab active" data-tab="checklist" role="tab">Checklist</button>
+  <button class="tab" data-tab="history" role="tab">Histórico</button>
+  <button class="tab" data-tab="data" role="tab">Dados e Backup</button>
+</nav>
+
+<main class="no-print">
+  <!-- ABA CHECKLIST -->
+  <section id="tab-checklist" class="panel active">
+    <div class="card ident">
+      <label>Responsável<input id="inResp" type="text" placeholder="Seu nome" autocomplete="name"></label>
+      <label>Sala / Turma<input id="inSala" type="text" placeholder="Ex: Sala 02 - Lab Informática"></label>
+      <label>Turno
+        <select id="inTurno">
+          <option>Manhã</option><option>Tarde</option><option>Noite</option><option>Integral</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="row-between">
+      <div id="progress" class="progress-text"></div>
+      <button id="btnManage" class="btn ghost">Gerenciar equipamentos</button>
+    </div>
+
+    <div id="items" class="items"></div>
+
+    <div class="card">
+      <label for="inNotes"><strong>Registro de divergências / observações gerais</strong></label>
+      <textarea id="inNotes" rows="4" placeholder="Avarias, itens em manutenção, patrimônios faltantes, ocorrências do dia…"></textarea>
+    </div>
+
+    <div class="actions">
+      <button id="btnFinish" class="btn primary big">Finalizar checklist e gerar relatório</button>
+      <button id="btnReset" class="btn danger">Resetar contagem do dia</button>
+    </div>
+  </section>
+
+  <!-- ABA HISTÓRICO -->
+  <section id="tab-history" class="panel">
+    <div class="card filters">
+      <label>Data<input id="fDate" type="date"></label>
+      <label>Status
+        <select id="fStatus">
+          <option value="all">Todos</option>
+          <option value="div">Com divergência</option>
+          <option value="ok">Sem divergência</option>
+        </select>
+      </label>
+      <button id="btnClearFilter" class="btn ghost">Limpar filtros</button>
+    </div>
+    <div id="historyList" class="history"></div>
+  </section>
+
+  <!-- ABA DADOS -->
+  <section id="tab-data" class="panel">
+    <div class="card">
+      <h2>Exportar backup</h2>
+      <p>Baixa um arquivo .json com a lista de equipamentos e todo o histórico de relatórios.</p>
+      <button id="btnExport" class="btn primary">Exportar backup (.json)</button>
+    </div>
+    <div class="card">
+      <h2>Importar backup</h2>
+      <p>Restaura os dados a partir de um backup. Os dados atuais serão substituídos.</p>
+      <input id="fileImport" type="file" accept=".json,application/json" hidden>
+      <button id="btnImport" class="btn">Importar backup (.json)</button>
+    </div>
+    <div class="card" id="storageInfo"></div>
+  </section>
+</main>
+
+<!-- MODAL: GERENCIAR EQUIPAMENTOS -->
+<dialog id="manageModal" class="no-print">
+  <div class="modal-head"><h2>Gerenciar equipamentos</h2><button class="icon-btn" data-close aria-label="Fechar">✕</button></div>
+  <div id="manageList" class="manage-list"></div>
+  <form id="addForm" class="add-form">
+    <input id="newName" type="text" placeholder="Novo equipamento" required>
+    <input id="newQty" type="number" min="0" value="1" required aria-label="Quantidade esperada">
+    <button class="btn primary" type="submit">Adicionar</button>
+  </form>
+</dialog>
+
+<!-- MODAL: RELATÓRIO -->
+<dialog id="reportModal" class="no-print">
+  <div class="modal-head"><h2>Relatório</h2><button class="icon-btn" data-close aria-label="Fechar">✕</button></div>
+  <div id="reportView" class="report"></div>
+  <div class="actions row">
+    <button id="btnCopy" class="btn primary">Copiar para WhatsApp</button>
+    <button id="btnPrint" class="btn">Salvar PDF / Imprimir</button>
+  </div>
+</dialog>
+
+<div id="printArea" class="print-only report"></div>
+<div id="toast" class="toast no-print" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
