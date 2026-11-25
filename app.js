@@ -102,6 +102,11 @@ async function saveToCloud(collection, docId, data) {
 async function savePrefsToCloud() { await saveToCloud('prefs', 'user', state.prefs); }
 async function saveEquipToCloud() { await saveToCloud('equip', 'list', { equip: state.equip }); }
 async function saveReportToCloud(report) { await saveToCloud('reports', report.id, report); }
+async function saveReportToCloudRetry(report, attempts = 3) {
+  for (let i = 0; i < attempts; i++) {
+    try { await saveReportToCloud(report); return true; } catch (e) { if (i === attempts - 1) throw e; await new Promise(r => setTimeout(r, 1500 * (i + 1))); }
+  }
+}
 async function saveMetaToCloud() { await saveToCloud('meta', 'counter', { laudoCounter: state.laudoCounter }); }
 async function deleteReportFromCloud(id) {
   if (!state.firebaseReady || !state.db) return;
@@ -328,7 +333,7 @@ async function finishChecklist() {
   state.history.unshift(report);
   saveHist(); renderHistory();
   try {
-    await saveReportToCloud(report);
+    await saveReportToCloudRetry(report);
     toast(`Laudo ${report.laudo} gerado e salvo na nuvem`);
   } catch (err) {
     toast(`Laudo ${report.laudo} gerado localmente. Erro ao salvar na nuvem.`);
@@ -678,8 +683,13 @@ async function init() {
 
   $('#btnSyncNow').addEventListener('click', async () => {
     if (!state.firebaseReady) return toast('Firebase não configurado.');
-    await saveEquipToCloud(); await saveHistToCloud(); await savePrefsToCloud(); await saveMetaToCloud();
-    toast('Sincronizado com a nuvem');
+    try {
+      await saveEquipToCloud(); await saveHistToCloud(); await savePrefsToCloud(); await saveMetaToCloud();
+      toast('Sincronizado com a nuvem');
+    } catch (err) {
+      toast('Erro ao sincronizar com a nuvem.');
+      console.warn('Sync error:', err);
+    }
   });
 
   $('#themeBtn').addEventListener('click', () => {
