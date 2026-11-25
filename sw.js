@@ -1,6 +1,6 @@
 /* Service Worker — Cache-First para uso 100% offline.
    Ao alterar qualquer arquivo, incremente CACHE_VERSION. */
-const CACHE_VERSION = 'checklist-v2';
+const CACHE_VERSION = 'checklist-v3';
 const ASSETS = ['./','./index.html','./style.css','./app.js','./manifest.json','./icon.svg','./icon-192.png','./icon-512.png'];
 
 self.addEventListener('install', e => {
