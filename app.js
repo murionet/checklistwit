@@ -97,7 +97,7 @@ function initFirebase() {
 
 async function saveToCloud(collection, docId, data) {
   if (!state.firebaseReady || !state.db) return;
-  try { await state.db.collection(collection).doc(docId).set(data, { merge: true }); } catch { }
+  await state.db.collection(collection).doc(docId).set(data, { merge: true });
 }
 async function savePrefsToCloud() { await saveToCloud('prefs', 'user', state.prefs); }
 async function saveEquipToCloud() { await saveToCloud('equip', 'list', { equip: state.equip }); }
@@ -304,7 +304,7 @@ function onAddItem(ev) {
 }
 
 /* ---------- Relatório (Laudo) ---------- */
-function finishChecklist() {
+async function finishChecklist() {
   if (!state.equip.length) return toast('Cadastre ao menos um equipamento.');
   const instrutor = $('#inInstrutor').value.trim();
   const escola = $('#inEscola').value.trim();
@@ -326,9 +326,15 @@ function finishChecklist() {
     hasDivergence: items.some(i => i.found !== i.expected)
   };
   state.history.unshift(report);
-  saveHist(); saveReportToCloud(report); renderHistory();
+  saveHist(); renderHistory();
+  try {
+    await saveReportToCloud(report);
+    toast(`Laudo ${report.laudo} gerado e salvo na nuvem`);
+  } catch (err) {
+    toast(`Laudo ${report.laudo} gerado localmente. Erro ao salvar na nuvem.`);
+    console.warn('Firestore save error:', err);
+  }
   openReport(report);
-  toast(`Laudo ${report.laudo} gerado`);
 }
 
 function reportHTML(r) {
