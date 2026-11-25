@@ -18,5 +18,4 @@ Thumbs.db
 # Logs
 *.log
 
-# Firebase config (contém chaves reais - não versionar)
-firebase-config.js
+
