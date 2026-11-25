@@ -3,52 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Checklist de Equipamentos</title>
-<meta name="theme-color" content="#1f3a5f">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+<meta name="referrer" content="no-referrer">
+<title>Checklist WIT — Núcleo de Tecnologia</title>
+<meta name="theme-color" content="#0D9458">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main class="app" id="appRoot">
-  <!-- CABEÇALHO SUPERIOR (apenas no mobile; em desktop fica discreto) -->
   <header class="topbar no-print">
-    <div class="brand">
-      <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      <span>Checklist de Equipamentos</span>
+  <div class="brand">
+    <div class="brand-dot"></div>
+    <div class="brand-text">
+      <div class="brand-name">Checklist WIT</div>
+      <div class="brand-sub">Núcleo de Tecnologia · Barueri</div>
     </div>
-    <button id="themeBtn" class="icon-btn" aria-label="Alternar tema claro/escuro" title="Tema">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79"/></svg>
-    </button>
-    <span id="syncBadge" class="sync-badge" title="Sincronização"></span>
-  </header>
+  </div>
+  <button id="themeBtn" class="theme-btn" aria-label="Alternar tema claro/escuro" title="Tema">
+    <span id="themeIcon"></span>
+  </button>
+  <span id="syncBadge" class="sync-badge" title="Sincronização"></span>
+</header>
+<!-- Bottom Tab Bar -->
+<nav class="bottom-nav no-print" role="tablist" aria-label="Navegação principal">
+  <button class="nav-item active" data-tab="checklist" role="tab" aria-selected="true">
+    <span data-icon="checklist"></span>
+    <span>Checklist</span>
+  </button>
+  <button class="nav-item" data-tab="history" role="tab" aria-selected="false">
+    <span data-icon="history"></span>
+    <span>Histórico</span>
+  </button>
+  <button class="nav-item" data-tab="data" role="tab" aria-selected="false">
+    <span data-icon="database"></span>
+    <span>Backup</span>
+  </button>
+</nav>
+<main class="app" id="appRoot">
 
   <!-- ABA CHECKLIST -->
   <section id="tab-checklist" class="panel active">
+    <!-- Identificação -->
     <div class="card ident">
-      <label>Nome do instrutor(a)<input id="inInstrutor" type="text" placeholder="Seu nome" autocomplete="name"></label>
-      <label>Escola<input id="inEscola" type="text" placeholder="Nome da escola"></label>
-      <label>Turno
-        <select id="inTurno">
-          <option>Manhã</option><option>Tarde</option><option>Integral</option>
+      <label class="ident-row">
+        <span class="ident-label"><span data-icon="user"></span>Nome do instrutor(a)</span>
+        <input id="inInstrutor" class="ident-control" type="text" placeholder="Ex: Prof. Murilo" autocomplete="name">
+      </label>
+      <label class="ident-row">
+        <span class="ident-label"><span data-icon="school"></span>Unidade escolar (EMEF)</span>
+        <select id="inEscola" class="ident-control">
+          <option value="">Selecione a escola</option>
+          <option>EMEF Alcino Francisco de Souza</option>
+          <option>EMEF Alexandrino da Silveira Bueno</option>
+          <option>EMEF Amador Aguiar</option>
+          <option>EMEF Armando Cavazza</option>
+          <option>EMEF Bruno Tolaini</option>
+          <option>EMEF Carlos Osmarinho de Lima</option>
+          <option>EMEF Dalva Fogaça</option>
+          <option>EMEF Dorival Faria</option>
+          <option>EMEF Elvira Lefèvre Salles Nemer</option>
+          <option>EMEF Estevan Placencio</option>
+          <option>EMEF Eufrazia da Costa</option>
+          <option>EMEF Ezio Berzaghi</option>
+          <option>EMEF Fioravante Barletta</option>
+          <option>EMEF Gilberto Florencio</option>
+          <option>EMEF Henrique Fernando Gomes</option>
+          <option>EMEF João de Almeida Lemos</option>
+          <option>EMEF Jorge Augusto de Camargo</option>
+          <option>EMEF José Domingues da Silveira</option>
+          <option>EMEF José Leandro de Barros Pimentel</option>
+          <option>EMEF Levy Gonçalves de Oliveira</option>
+          <option>EMEF Luiz de Oliveira Andrade</option>
+          <option>EMEF Margarida Maria Maciel</option>
+          <option>EMEF Maria Elisa Bonilha</option>
+          <option>EMEF Maria Meduneckas</option>
+          <option>EMEF Marlene Pereira Santiago</option>
+          <option>EMEF Nestor de Camargo</option>
+          <option>EMEF Nilo Andrade Amaral</option>
+          <option>EMEF Onofre da Silva</option>
+          <option>EMEF Osvaldo Batista Pereira</option>
+          <option>EMEF Padre Luiz de Oliveira</option>
+          <option>EMEF Pastor Carlos Richard Caldas</option>
+          <option>EMEF Raposo Tavares</option>
+          <option>EMEF Renato Rosa</option>
+          <option>EMEF Rita de Jesus</option>
+          <option>EMEF Sidney Santucci</option>
+          <option>EMEF Taro Mizutori</option>
         </select>
       </label>
-      <label class="declarante"><input type="checkbox" id="inDeclarante" checked> Declaro que conferi os itens e me responsabilizo pelas informações.</label>
+      <div class="ident-row">
+        <span class="ident-label"><span data-icon="clock"></span>Turno</span>
+        <div class="segmented" id="segTurno" role="radiogroup" aria-label="Turno">
+          <button type="button" class="seg-btn active" data-turno="Manhã" aria-pressed="true">Manhã</button>
+          <button type="button" class="seg-btn" data-turno="Tarde" aria-pressed="false">Tarde</button>
+          <button type="button" class="seg-btn" data-turno="Integral" aria-pressed="false">Integral</button>
+        </div>
+        <input id="inTurno" type="hidden" value="Manhã">
+      </div>
+      <label class="ident-row declare">
+        <input type="checkbox" id="inDeclarante" checked>
+        <span class="ident-label">Declaro que conferi os itens e me responsabilizo pelas informações.</span>
+      </label>
     </div>
 
+    <!-- Progresso -->
     <div class="row-between">
-      <div id="progress" class="progress-text">0 de 0 conferidos</div>
-      <button id="btnManage" class="btn ghost">Gerenciar equipamentos</button>
+      <div class="progress-text" id="progress">0 de 0 conferidos</div>
+      <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+      <div class="actions-fast" style="display:flex;gap:.5rem">
+        <button id="btnSelectAll" class="btn ghost small">Marcar todos</button>
+        <button id="btnSelectNone" class="btn ghost small">Limpar</button>
+      </div>
+      <button id="btnManage" class="btn ghost"><span class="btn-ico" data-icon="sliders"></span>Gerenciar</button>
     </div>
 
+    <!-- Lista de equipamentos -->
     <div id="items" class="items"></div>
 
+    <!-- Observações -->
     <div class="card">
-      <label for="inNotes"><strong>Observações</strong></label>
-      <textarea id="inNotes" rows="4" placeholder="Avarias, itens em manutenção, patrimônios faltantes…"></textarea>
+      <label style="display:flex;flex-direction:column;gap:.4rem">
+        <span class="ident-label" style="font-size:.9rem">Observações</span>
+        <textarea id="inNotes" rows="4" class="ident-control" placeholder="Avarias, itens em manutenção, patrimônios faltantes…"></textarea>
+      </label>
     </div>
 
+    <!-- Ações finais -->
     <div class="actions">
       <button id="btnFinish" class="btn primary big">Finalizar checklist e gerar laudo</button>
       <button id="btnReset" class="btn danger">Resetar contagem</button>
@@ -58,15 +140,17 @@
   <!-- ABA HISTÓRICO -->
   <section id="tab-history" class="panel">
     <div class="card filters">
-      <label>Data<input id="fDate" type="date"></label>
-      <label>Status
-        <select id="fStatus">
+      <div class="filter-row">
+        <label style="font-size:.85rem;font-weight:600;color:var(--ink-secondary)">Data</label>
+        <input id="fDate" type="date" class="ident-control" style="width:auto;min-width:140px">
+        <label style="font-size:.85rem;font-weight:600;color:var(--ink-secondary);margin-left:.6rem">Status</label>
+        <select id="fStatus" class="ident-control" style="width:auto;min-width:160px">
           <option value="all">Todos</option>
           <option value="div">Com divergência</option>
           <option value="ok">Sem divergência</option>
         </select>
-      </label>
-      <button id="btnClearFilter" class="btn ghost">Limpar filtros</button>
+      </div>
+      <button id="btnClearFilter" class="btn ghost small" style="width:auto">Limpar filtros</button>
     </div>
     <div id="historyList" class="history"></div>
   </section>
@@ -74,44 +158,32 @@
   <!-- ABA BACKUP -->
   <section id="tab-data" class="panel">
     <div class="card">
-      <h2>Backup</h2>
-      <p>Exporta um arquivo .json com equipamentos, laudos e preferências.</p>
+      <div class="section-title">Backup</div>
+      <p style="margin-bottom:.8rem">Exporta um arquivo .json com equipamentos, laudos e preferências.</p>
       <button id="btnExport" class="btn primary">Exportar backup</button>
     </div>
     <div class="card">
-      <h2>Restaurar backup</h2>
-      <p>Substitui os dados atuais pelos do arquivo selecionado.</p>
+      <div class="section-title">Restaurar backup</div>
+      <p style="margin-bottom:.8rem">Substitui os dados atuais pelos do arquivo selecionado.</p>
       <input id="fileImport" type="file" accept=".json,application/json" hidden>
       <button id="btnImport" class="btn">Importar backup</button>
     </div>
     <div class="card" id="storageInfo"></div>
     <div class="card firebase-status">
-      <h2>Nuvem (Firebase)</h2>
+      <div class="section-title">Nuvem (Firebase)</div>
       <p id="firebaseMsg">Configurando…</p>
       <button id="btnSyncNow" class="btn">Sincronizar agora</button>
     </div>
   </section>
 </main>
 
-<!-- NAVEGAÇÃO INFERIOR (mobile) -->
-<nav class="bottom-nav no-print" role="tablist" aria-label="Navegação principal">
-  <button class="nav-item active" data-tab="checklist" role="tab" aria-selected="true">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    <span>Checklist</span>
-  </button>
-  <button class="nav-item" data-tab="history" role="tab" aria-selected="false">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7H3m5 10V3m6 13h-3M3 17h9M13 3h7l2 3"/></svg>
-    <span>Histórico</span>
-  </button>
-  <button class="nav-item" data-tab="data" role="tab" aria-selected="false">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    <span>Backup</span>
-  </button>
-</nav>
 
-<!-- MODAL: RELATÓRIO (LAUDO) -->
-<dialog id="reportModal" class="no-print">
-  <div class="modal-head"><h2>Laudo de Conferência</h2><button class="icon-btn" data-close aria-label="Fechar">✕</button></div>
+<!-- Modal: Relatório (Laudo) -->
+<dialog id="reportModal" class="no-print" aria-labelledby="reportModalTitle" aria-modal="true">
+  <div class="modal-head">
+    <h2 id="reportModalTitle">Laudo de Conferência</h2>
+    <button class="icon-btn" data-close="report" aria-label="Fechar">✕</button>
+  </div>
   <div id="reportView" class="report"></div>
   <div class="actions row">
     <button id="btnCopy" class="btn primary">Copiar WhatsApp</button>
@@ -120,12 +192,12 @@
   </div>
 </dialog>
 
-<!-- BOTTOM SHEET: GERENCIAR EQUIPAMENTOS -->
+<!-- Bottom Sheet: Gerenciar equipamentos -->
 <div id="manageSheet" class="bottom-sheet no-print" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
   <div class="sheet-handle"></div>
   <div class="sheet-head">
     <h3 id="sheetTitle">Gerenciar equipamentos</h3>
-    <button class="icon-btn" data-close aria-label="Fechar">✕</button>
+    <button class="icon-btn" data-close="manage" aria-label="Fechar">✕</button>
   </div>
   <div id="manageList" class="manage-list"></div>
   <form id="addForm" class="add-form">
@@ -139,6 +211,13 @@
 <div id="printArea" class="print-only report"></div>
 <div id="toast" class="toast no-print" role="status" aria-live="polite"></div>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<!-- jsPDF para geração de PDF real -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Config do Firebase -->
+<script src="firebase-config.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
